@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Random Jazz Chords</title>
+  <style>
+   html {
+     font-family: Sans-Serif;
+     font-size: 14pt;
+   }
+
+   button, select {
+     display: inline-block;
+     vertical-align: middle;
+     font-size: 14pt;
+     margin: 10px;
+   }
+
+   label, select {
+     display: inline-block;
+     vertical-align: middle;
+   }
+
+   h1 {
+     display: inline-block;
+     vertical-align: middle;
+     font-size: 20pt;
+     margin-right: 20px;
+   }
+
+   #bars {
+     font-size: 18pt;
+   }
+
+   #options {
+     background-color: #eee;
+     margin-top: 15px;
+   }
+
+   #bars {
+     margin-top: 15px;
+   }
+  </style>
+  <script>
+
+   // Utils
+   var randomInt = function (min, max) {
+     min = Math.ceil(min);
+     max = Math.floor(max);
+     return Math.floor(Math.random() * (max - min)) + min;
+   }
+
+   var hideElementById = function (id) {
+     document.getElementById(id).style.setProperty("display", "none");
+   }
+
+   var showElementById = function (id) {
+     document.getElementById(id).style.setProperty("display", "");
+   }
+
+   var setHTMLById = function (id, html) {
+     document.getElementById(id).innerHTML = html;
+   }
+
+   // Useful symbols
+   var flatChar = '&#9837;';
+   var sharpChar = '&#9839;';
+   var delta = '&#916;';
+
+   // Input rendering/reading
+   var renderSelect = function (id, options) {
+     var content = Object.keys(options).map(function (val) {
+       return '<option value="' + val + '">' + options[val] + '</option>';
+     }).join('');
+     return '<select multiple id="' + id + '">' + content + '</select>';
+   };
+
+   var getSelected = function (id) {
+     var selected = document.getElementById(id).selectedOptions;
+     return [].slice.call(selected).map(function (option) {
+       return option.value; });
+   };
+
+   // Chord/note data (immutable)
+   var notes = {
+     f: 'F',
+     c: 'C',
+     g: 'G',
+     d: 'D',
+     a: 'A',
+     e: 'E',
+     b: 'B',
+     gflat: 'G' + flatChar,
+     dflat: 'D' + flatChar,
+     aflat: 'A' + flatChar,
+     eflat: 'E' + flatChar,
+     bflat: 'B' + flatChar
+   };
+
+   var chords = {
+     dom7: '7',
+     maj7: delta + '7',
+     min7: '-7'
+   };
+
+   var numBars = 8;
+   var numLines = 4;
+
+   // Actually generate random chords
+   var renderChords = function (allowedNotes, allowedChords) {
+     if (allowedNotes.length && allowedChords.length) {
+       console.log(allowedNotes, allowedChords);
+       var text = '';
+       for (j = 0; j < numLines; j++) {
+         text += '<br>|';
+         for (i = 0; i < numBars; i++) {
+           note = allowedNotes[randomInt(0, allowedNotes.length)];
+           chord = allowedChords[randomInt(0, allowedChords.length)];
+           text += '&nbsp;&nbsp;' + notes[note] + chords[chord] + '&nbsp;&nbsp;|';
+         }
+       }
+       return text;
+     } else {
+       return 'Please select at least one root note and chord type';
+     }
+   };
+
+   // Event handlers
+   var hideOptions = function () {
+     hideElementById('options');
+     hideElementById('hideoptions');
+     showElementById('showoptions');
+   };
+
+   var showOptions = function () {
+     showElementById('options');
+     showElementById('hideoptions');
+     hideElementById('showoptions');
+   };
+
+   var refresh = function () {
+     setHTMLById('bars', renderChords(getSelected('notes'), getSelected('chords')));
+   };
+
+   var init = function () {
+     setHTMLById('notes', renderSelect('notes', notes));
+     setHTMLById('chords', renderSelect('chords', chords));
+     setHTMLById('bars', renderChords(getSelected('notes'), getSelected('chords')));
+   };
+  </script>
+</head>
+<body>
+  <h1>Random Jazz Chords</h1>
+  <button onclick="refresh()">Refresh</button>
+  <button id="showoptions" onclick="showOptions()">Show Options</button>
+  <button id="hideoptions" onclick="hideOptions()" style="display: none">Hide Options</button>
+  <div id="options" style="display: none">
+    <label>Root notes:</label> <select id="notes" multiple></select> <label>Chord types:</label> <select id="chords" multiple></select>
+  </div>
+  <div id="bars"></div>
+  <script>init()</script>
+</body>
+</html>
