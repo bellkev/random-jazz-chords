@@ -136,8 +136,7 @@
      min7: '-7'
    };
 
-   var numBars = 8;
-   var numLines = 4;
+   var numBars = 32;
 
    // Actually generate random chords
    var renderChord = function (chordName) {
@@ -147,12 +146,10 @@
    var renderChords = function (allowedNotes, allowedChords) {
      if (allowedNotes.length && allowedChords.length) {
        var text = '';
-       for (j = 0; j < numLines; j++) {
-         for (i = 0; i < numBars; i++) {
-           note = allowedNotes[randomInt(0, allowedNotes.length)];
-           chord = allowedChords[randomInt(0, allowedChords.length)];
-           text += renderChord(notes[note] + chords[chord]);
-         }
+       for (i = 0; i < numBars; i++) {
+         note = allowedNotes[randomInt(0, allowedNotes.length)];
+         chord = allowedChords[randomInt(0, allowedChords.length)];
+         text += renderChord(notes[note] + chords[chord]);
        }
        return text;
      } else {
