@@ -4,6 +4,15 @@
   <title>Random Jazz Chords</title>
   <meta name="viewport" content="width=device-width">
   <style>
+   .clearfix:after {
+     visibility: hidden;
+     display: block;
+     font-size: 0;
+     content: " ";
+     clear: both;
+     height: 0;
+   }
+
    html, body {
      height: 100%;
    }
@@ -23,7 +32,7 @@
      background-color: #fff;
      margin: 0 auto;
      padding: 50px;
-     height: calc(100% - 100px);
+     min-height: calc(100% - 100px);
    }
 
    button, select {
@@ -67,11 +76,20 @@
      float: left;
      width: 200px;
      margin-bottom: 20px;
+     /* Prevent double-wide borders */
      margin-left: -1px;
-     border: 1px solid #000;
+     /* Force constant line height, vertically center with line-height == height == X */
      height: 1.5em;
      line-height: 1.5em;
      text-align: center;
+     border: 1px solid #000;
+   }
+
+   /* Prevent <sup> from affecting line height */
+   sup {
+     vertical-align: baseline;
+     position: relative;
+     top: -0.4em;
    }
   </style>
   <script>
@@ -99,6 +117,8 @@
    var flatChar = '&#9837;';
    var sharpChar = '&#9839;';
    var delta = '&#916;';
+   var halfDimChar = '<sup>&oslash;</sup>';
+   var dimChar = '<sup>o</sup>';
 
    // Input rendering/reading
    var renderSelect = function (id, options) {
@@ -133,7 +153,9 @@
    var chords = {
      dom7: '7',
      maj7: delta + '7',
-     min7: '-7'
+     min7: '-7',
+     halfdim7: halfDimChar + '7',
+     dim7: dimChar + '7'
    };
 
    var numBars = 32;
@@ -201,7 +223,7 @@
   </script>
 </head>
 <body>
-  <div id="app">
+  <div id="app" class="clearfix">
     <h1>Random Jazz Chords</h1>
     <button onclick="refresh()">Refresh</button>
     <button id="showoptions" onclick="showOptions()">Show Options</button>
