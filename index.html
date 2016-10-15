@@ -47,6 +47,10 @@
      min-width: 150px; /* Enough to show 'N items' on iPad */
    }
 
+   input {
+     width: 50px;
+   }
+
    header {
      margin-bottom: 25px;
    }
@@ -165,14 +169,12 @@
      dim7: dimChar + '7'
    };
 
-   var numBars = 32;
-
    // Actually generate random chords
    var renderChord = function (chordName) {
      return '<div class="chord">' + chordName + '</div>';
    };
 
-   var renderChords = function (allowedNotes, allowedChords) {
+   var renderChords = function (allowedNotes, allowedChords, numBars) {
      if (allowedNotes.length && allowedChords.length) {
        var text = '';
        for (i = 0; i < numBars; i++) {
@@ -200,7 +202,8 @@
    };
 
    var refresh = function () {
-     setHTMLById('bars', renderChords(getSelected('notes'), getSelected('chords')));
+     setHTMLById('bars', renderChords(getSelected('notes'), getSelected('chords'),
+                                      parseInt(document.getElementById('numbars').value)));
    };
 
    var initApp = function () {
@@ -209,7 +212,8 @@
      var noteOptions = Array.from(document.getElementById('notes').children);
      var chordOptions = Array.from(document.getElementById('chords').children);
      noteOptions.concat(chordOptions).forEach(function (option) { option.selected = true; });
-     setHTMLById('bars', renderChords(getSelected('notes'), getSelected('chords')));
+     document.getElementById('numbars').value = 32;
+     refresh();
    };
 
    var initAnalytics = function () {
@@ -240,7 +244,9 @@
       </div>
     </header>
     <div id="options" style="display: none">
-      <label>Root notes:</label> <select id="notes" multiple></select> <label>Chord types:</label> <select id="chords" multiple></select>
+      <label>Root notes:</label> <select id="notes" multiple></select>
+      <label>Chord types:</label> <select id="chords" multiple></select>
+      <label>Number of bars:</label> <input id="numbars" type="text"></input>
     </div>
     <div id="bars" class="clearfix"></div>
   </div>
