@@ -19,7 +19,7 @@
 
    html {
      font-family: Sans-Serif;
-     font-size: 14pt;
+     font-size: 16pt;
    }
 
    body {
@@ -28,39 +28,42 @@
    }
 
    #app {
-     max-width: 994px;
-     background-color: #fff;
+     /* Selfishly optimized for iPad mini width (1024px) */
+     max-width: 924px;
      margin: 0 auto;
      padding: 50px;
      min-height: calc(100% - 100px);
+     background-color: #fff;
    }
 
-   button, select {
+   button, label, select, input {
      display: inline-block;
      vertical-align: middle;
      font-size: 14pt;
      margin: 10px;
    }
 
-   label, select {
-     display: inline-block;
-     vertical-align: middle;
-     margin: 5px;
-   }
-
    select {
      min-width: 150px; /* Enough to show 'N items' on iPad */
    }
 
-   h1 {
-     display: inline-block;
-     vertical-align: middle;
-     font-size: 20pt;
-     margin-right: 20px;
+   header {
+     margin-bottom: 25px;
    }
 
-   #bars {
+   h1 {
+     display: inline-block;
      font-size: 20pt;
+     margin: 0;
+   }
+
+   #controls {
+     float: right;
+   }
+
+   #controls button {
+     margin: 0;
+     margin-left: 20px;
    }
 
    #options {
@@ -69,12 +72,16 @@
    }
 
    #bars {
+     font-size: 20pt;
+   }
+
+   #bars {
      margin-top: 15px;
    }
 
    .chord {
      float: left;
-     width: 200px;
+     width: 230px;
      margin-bottom: 20px;
      /* Prevent double-wide borders */
      margin-left: -1px;
@@ -223,15 +230,19 @@
   </script>
 </head>
 <body>
-  <div id="app" class="clearfix">
-    <h1>Random Jazz Chords</h1>
-    <button onclick="refresh()">Refresh</button>
-    <button id="showoptions" onclick="showOptions()">Show Options</button>
-    <button id="hideoptions" onclick="hideOptions()" style="display: none">Hide Options</button>
+  <div id="app">
+    <header>
+      <h1>Random Jazz Chords</h1>
+      <div id="controls">
+        <button onclick="refresh()">Refresh</button>
+        <button id="showoptions" onclick="showOptions()">Show Options</button>
+        <button id="hideoptions" onclick="hideOptions()" style="display: none">Hide Options</button>
+      </div>
+    </header>
     <div id="options" style="display: none">
       <label>Root notes:</label> <select id="notes" multiple></select> <label>Chord types:</label> <select id="chords" multiple></select>
     </div>
-    <div id="bars"></div>
+    <div id="bars" class="clearfix"></div>
   </div>
   <script>init()</script>
 </body>
