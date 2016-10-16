@@ -31,8 +31,8 @@
      /* Selfishly optimized for iPad mini width (1024px) */
      max-width: 924px;
      margin: 0 auto;
-     padding: 50px;
-     min-height: calc(100% - 100px);
+     padding: 10px;
+     min-height: calc(100% - 20px);
      background-color: #fff;
    }
 
@@ -44,7 +44,8 @@
    }
 
    select {
-     min-width: 150px; /* Enough to show 'N items' on iPad */
+     /* Enough to show 'N items' on iPad */
+     min-width: 120px;
    }
 
    input {
@@ -53,6 +54,7 @@
 
    header {
      margin-bottom: 25px;
+     text-align: center;
    }
 
    h1 {
@@ -61,13 +63,12 @@
      margin: 0;
    }
 
-   #controls {
-     float: right;
+   h1, #controls {
+     min-width: 275px;
    }
 
    #controls button {
-     margin: 0;
-     margin-left: 20px;
+     margin: 10px 5px;
    }
 
    #options {
@@ -85,7 +86,7 @@
 
    .chord {
      float: left;
-     width: 230px;
+     width: 135px;
      margin-bottom: 20px;
      /* Prevent double-wide borders */
      margin-left: -1px;
@@ -101,6 +102,31 @@
      vertical-align: baseline;
      position: relative;
      top: -0.4em;
+   }
+
+   /* Desktop/tablet layout */
+   @media (min-width: 650px) {
+     #app {
+       padding: 50px;
+       min-height: calc(100% - 100px);
+     }
+
+     header {
+       text-align: left;
+     }
+
+     #controls {
+       float: right;
+     }
+
+     #controls button {
+       margin: 0;
+       margin-left: 20px;
+     }
+
+     .chord {
+       width: 230px;
+     }
    }
   </style>
   <script>
