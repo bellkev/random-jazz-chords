@@ -201,9 +201,20 @@
      hideElementById('showoptions');
    };
 
-   var refresh = function () {
+   var _refresh = function () {
      setHTMLById('bars', renderChords(getSelected('notes'), getSelected('chords'),
                                       parseInt(document.getElementById('numbars').value)));
+   }
+
+   var refresh = function () {
+     if (window.ga) {
+       ga('send', {
+         hitType: 'event',
+         eventCategory: 'App',
+         eventAction: 'refresh',
+       });
+     }
+     _refresh();
    };
 
    var initApp = function () {
@@ -213,7 +224,7 @@
      var chordOptions = Array.from(document.getElementById('chords').children);
      noteOptions.concat(chordOptions).forEach(function (option) { option.selected = true; });
      document.getElementById('numbars').value = 32;
-     refresh();
+     _refresh();
    };
 
    var initAnalytics = function () {
