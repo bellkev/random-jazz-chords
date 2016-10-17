@@ -87,7 +87,7 @@
 
    .chord {
      float: left;
-     width: 135px;
+     width: calc(50% - 1px);
      margin-bottom: 20px;
      /* Prevent double-wide borders */
      margin-left: -1px;
@@ -130,7 +130,13 @@
      }
 
      .chord {
-       width: 230px;
+       width: calc(33.33% - 1px);
+     }
+   }
+
+   @media (min-width: 800px) {
+     .chord {
+       width: calc(25% - 1px);
      }
    }
   </style>
